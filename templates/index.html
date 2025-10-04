@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Attach to Tech — tech that stick with you</title>
+  <meta name="description" content="Attach to Tech — website design, social media, infra, content & teaching at affordable prices." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome (free) -->
+  <script src="https://kit.fontawesome.com/a2d9f4b3b9.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+  <style>
+    /* ---------- CSS Variables & Base ---------- */
+    :root{
+      --bg: #ffffff;
+      --blue-50: #eef6ff;
+      --blue-100:#dfeeff;
+      --blue-200:#bcdcfb;
+      --blue-500:#0b66ff; /* accent */
+      --blue-700:#0649c7;
+      --muted:#6b7280;
+      --glass: rgba(255,255,255,0.6);
+      --card-shadow: 0 6px 20px rgba(9,30,66,0.08);
+      --radius: 14px;
+      --max-width: 1200px;
+      --accent-gradient: linear-gradient(135deg,var(--blue-500),#58a6ff);
+      font-family: 'Merriweather', serif;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:var(--bg);color:#0f1724}
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+
+    /* ---------- Layout ---------- */
+    .container{max-width:var(--max-width);margin:0 auto;padding:0 20px}
+    header{position:sticky;top:12px;z-index:50}
+    .nav-wrap{backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.55));border-radius:20px;padding:10px;margin:12px 0;box-shadow:var(--card-shadow)}
+    nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56;height:56px;border-radius:10px;display:grid;place-items:center;background:var(--accent-gradient);color:white;font-family:'Baloo 2', cursive;font-weight:800;font-size:18px}
+    .brand h1{margin:0;font-size:18px}
+    .brand p{margin:0;font-size:12px;color:var(--muted)}
+
+    /* Navbar links */
+    .nav-links{display:flex;gap:18px;align-items:center}
+    .nav-links a{padding:8px 12px;border-radius:10px;transition:all .25s;display:inline-flex;align-items:center;gap:8px;font-weight:600}
+    .nav-links a:hover{transform:translateY(-4px);box-shadow:0 8px 20px rgba(11,102,255,0.12)}
+    .cta{background:var(--blue-500);color:white;padding:10px 14px;border-radius:12px}
+
+    /* Mobile */
+    .mobile-toggle{display:none}
+    @media (max-width:880px){
+      .nav-links{display:none}
+      .mobile-toggle{display:inline-flex}
+    }
+
+    /* ---------- Hero ---------- */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;padding:48px 0}
+    .hero .eyebrow{display:inline-flex;align-items:center;gap:10px;background:var(--blue-50);padding:8px 12px;border-radius:999px;font-weight:700;color:var(--blue-700);width:max-content}
+    .hero h2{margin:18px 0 12px;font-family:'Baloo 2', cursive;font-size:40px;line-height:1.02}
+    .sub{color:var(--muted);margin-bottom:20px}
+    .hero .actions{display:flex;gap:12px}
+    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(248,252,255,0.9));padding:20px;border-radius:16px;box-shadow:var(--card-shadow)}
+
+    /* Animated feature list */
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:18px}
+    .feature{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(90deg, rgba(11,102,255,0.04), transparent);transition:transform .3s}
+    .feature:hover{transform:translateY(-6px)}
+
+    /* Search / quick quote */
+    .quote{display:flex;gap:8px;margin-top:12px}
+    .quote input{flex:1;padding:12px;border-radius:10px;border:1px solid #e6eefc}
+    .quote button{padding:12px 16px;border-radius:10px;border:none;background:var(--blue-500);color:white;font-weight:700}
+
+    /* ---------- Services / Cards ---------- */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:40px 0}
+    .card{background:linear-gradient(180deg, white, var(--blue-50));padding:20px;border-radius:16px;box-shadow:var(--card-shadow);transition:transform .4s,box-shadow .4s}
+    .card:hover{transform:translateY(-12px);box-shadow:0 20px 40px rgba(9,30,66,0.12)}
+    .card h3{margin:8px 0}
+    .card p{color:var(--muted);margin:0}
+
+    @media (max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:1fr}
+    }
+
+    /* ---------- Notes Section (interactive) ---------- */
+    .notes-wrap{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:36px}
+    .note-list{display:grid;gap:12px}
+    .note-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;background:linear-gradient(90deg, rgba(8,66,255,0.03), rgba(8,66,255,0.01));transition:transform .2s}
+    .note-item:hover{transform:translateX(6px)}
+    .note-meta{font-size:12px;color:var(--muted)}
+    .note-filter{background:var(--blue-50);padding:12px;border-radius:12px}
+
+    /* ---------- About / Contact / Join ---------- */
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+    .contact-card{padding:20px;background:linear-gradient(180deg,#f8fbff,white);border-radius:12px}
+
+    /* ---------- Footer ---------- */
+    /* footer{padding:26px 0;color:var(--muted);font-size:14px} */
+
+    /* ---------- Micro-animations ---------- */
+    .float-up{animation:floatUp 900ms cubic-bezier(.2,.9,.2,1) both}
+    @keyframes floatUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+    .slide-in-left{animation:slideInLeft .7s cubic-bezier(.2,.9,.2,1) both}
+    @keyframes slideInLeft{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+
+    /* subtle hover tilt using transform */
+    .tilt{transition:transform .35s}
+    .tilt:hover{transform:rotateX(6deg) rotateY(-6deg) translateY(-6px)}
+
+    /* small utilities */
+    .muted{color:var(--muted)}
+    .chip{padding:6px 10px;background:var(--blue-50);border-radius:999px;font-weight:700}
+    input,textarea{font-family:inherit}
+.note-card p {
+  display: inline; /* Keep paragraph inline for the download link */
+  font-size: 0.95em;
+  line-height: 1.5;
+}
+
+.download-link {
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 0.85em;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.download-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
+
+
+ /* subtle hover effect on about section */
+  #about p.muted {
+    transition: transform 0.3s, color 0.3s;
+    cursor: default;
+  }
+  #about p.muted:hover {
+    transform: translateX(4px);
+    color: #007bff;
+  }
+
+  .note-card {
+  background:#fff;
+  padding:16px;
+  border-radius:12px;
+  margin-bottom:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+.note-card:hover {
+  transform: translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.15);
+}
+/* Chips */
+.chip {
+  background:#eef6ff; 
+  padding:6px 12px; 
+  border-radius:16px; 
+  cursor:pointer; 
+  font-size:0.85em;
+  transition:0.3s;
+}
+.chip:hover { background:#d0e4ff; }
+
+/* Notes Cards */
+.note-card {
+  background:#f8fbff;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  transition:0.3s;
+}
+.note-card:hover {
+  transform: translateY(-4px);
+  box-shadow:0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* CTA buttons */
+.cta { 
+  display:inline-block; 
+  padding:8px 12px; 
+  background:#007bff; 
+  color:#fff; 
+  border-radius:8px; 
+  text-decoration:none; 
+  transition:0.3s;
+}
+.cta:hover { background:#0056b3; }
+
+.static-btn[data-static="true"] {
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+/* Announcement float animation */
+@keyframes floatAnnouncement {
+  0% { transform: translateY(0px); box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+  50% { transform: translateY(-6px); box-shadow:0 8px 20px rgba(0,0,0,0.15);}
+  100% { transform: translateY(0px); box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+}
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div class="nav-wrap">
+      <nav class="container" style="padding:0;">
+        <div class="brand">
+           <div class="logo">
+   <img src="{{ url_for('static', filename='img/logo.png') }}">
+  </div>
+          <div>
+            <h1>Attach to Tech</h1>
+            <p class="muted">tech that stick with you</p>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="nav-links">
+            <a href="/projects">Projects</a>
+            <a href="#services"><i class="fa-solid fa-gear"></i> Services</a>
+            <a href="#notes"><i class="fa-solid fa-book-open"></i> Notes</a>
+            <a href="#about"><i class="fa-solid fa-info"></i> About</a>
+            <a href="#contact"><i class="fa-solid fa-envelope"></i> Contact</a>
+            <a href="#join" class="cta">Join Us</a>
+          </div>
+
+          <button class="mobile-toggle" id="mobileBtn" aria-label="Open menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- mobile dropdown -->
+    <div id="mobileMenu" style="display:none;margin-bottom:12px;">
+      <div style="background:var(--blue-50);padding:12px;border-radius:12px;box-shadow:var(--card-shadow)">
+        <a href="/projects">Projects</a>
+        <a href="#services" style="display:block;padding:8px">Services</a>
+        <a href="#notes" style="display:block;padding:8px">Notes</a>
+        <a href="#about" style="display:block;padding:8px">About</a>
+        <a href="#contact" style="display:block;padding:8px">Contact</a>
+        <a href="#join" style="display:block;padding:8px">Join Us</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div>
+        <div class="eyebrow">AI-designed • Modern • Affordable</div>
+        <h2 class="slide-in-left">Attach to Tech — <span style="color:var(--blue-700)">tech that stick with you</span></h2>
+        <p class="sub">Website design, Social Media Management, Infrastructure, Content Writing, Teaching — all under one roof and priced for real people. New-age design, AI-enhanced workflows and human care.</p>
+
+        <div class="actions">
+          <a class="cta" href="#services">Get Started</a>
+          <a href="#contact" style="padding:10px 14px;border-radius:12px;background:transparent;border:1px solid var(--blue-100);">Request Quote</a>
+        </div>
+
+        <div class="features">
+          <div class="feature tilt float-up">
+            <div style="font-size:20px;padding:10px;background:rgba(11,102,255,0.08);border-radius:10px"><i class="fa-solid fa-lightbulb"></i></div>
+            <div>
+              <div style="font-weight:800">AI-aided design</div>
+              <div class="muted">Faster mockups, smarter layouts</div>
+            </div>
+          </div>
+
+          <div class="feature tilt float-up" style="animation-delay:120ms">
+            <div style="font-size:20px;padding:10px;background:rgba(11,102,255,0.08);border-radius:10px"><i class="fa-solid fa-hashtag"></i></div>
+            <div>
+              <div style="font-weight:800">Social-first content</div>
+              <div class="muted">Short reels, captions &amp; calendar</div>
+            </div>
+          </div>
+
+          <div class="feature tilt float-up" style="animation-delay:240ms">
+            <div style="font-size:20px;padding:10px;background:rgba(11,102,255,0.08);border-radius:10px"><i class="fa-solid fa-network-wired"></i></div>
+            <div>
+              <div style="font-weight:800">Infrastructure</div>
+              <div class="muted">Affordable hosting &amp; setup</div>
+            </div>
+          </div>
+
+          <div class="feature tilt float-up" style="animation-delay:360ms">
+            <div style="font-size:20px;padding:10px;background:rgba(11,102,255,0.08);border-radius:10px"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div>
+              <div style="font-weight:800">Teaching &amp; mentorship</div>
+              <div class="muted">Short courses for teams</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote" style="margin-top:18px; text-align:center;">
+  <input type="text" id="quickIdea" placeholder="Describe your project in one line — get an instant starting plan" style="width:60%; padding:10px; border-radius:8px; border:1px solid #ccc;" />
+  <button onclick="generatePlan()" style="padding:10px 20px; border:none; background:#007bff; color:white; border-radius:8px; cursor:pointer;">Generate Plan</button>
+</div>
+
+<div id="planResult" style="margin-top:25px; text-align:left; max-width:700px; margin:auto;"></div>
+
+
+      </div>
+
+      <aside>
+        <div class="hero-card tilt">
+          <h3 style="margin-top:0">Quick Quote</h3>
+          <p class="muted">Fill basic details and we’ll email a tailored quote.</p>
+          <form id="quoteForm" style="margin-top:12px">
+            <input name="name" placeholder="Your name" required style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #eef6ff" />
+            <input name="email" placeholder="Email" required style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #eef6ff" />
+            <select name="service" style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #eef6ff">
+              <option>Website design</option>
+              <option>Social Media Manager</option>
+              <option>Infrastructure</option>
+              <option>Content Writing</option>
+              <option>Teaching</option>
+            </select>
+            <button type="submit" class="cta" style="width:100%">Request Quote</button>
+          </form>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:10px">
+          <div class="chip">Free consultation</div>
+          <div class="chip">Affordable plans</div>
+        </div>
+      </aside>
+    </section>
+  
+    <!-- Services -->
+    <section id="services">
+      <h2>Services we offer</h2>
+      <div class="grid">
+        <article class="card tilt">
+          <i class="fa-solid fa-code" style="font-size:28px"></i>
+          <h3>Website Design</h3>
+          <p>Modern, responsive websites built with performance and accessibility in mind.</p>
+          <p class="note-meta">From landing pages to full e-commerce.</p>
+        </article>
+
+        <article class="card tilt">
+          <i class="fa-solid fa-bullhorn" style="font-size:28px"></i>
+          <h3>Social Media Manager</h3>
+          <p>Content calendars, reels, captions, and engagement — we manage it end-to-end.</p>
+          <p class="note-meta">Strategy, creation &amp; analytics.</p>
+        </article>
+
+        <article class="card tilt">
+          <i class="fa-solid fa-server" style="font-size:28px"></i>
+          <h3>Infrastructure</h3>
+          <p>Reliable hosting, backups, and domain management with affordable pricing.</p>
+          <p class="note-meta">DevOps-lite for small teams.</p>
+        </article>
+
+        <article class="card tilt">
+          <i class="fa-solid fa-pen-nib" style="font-size:28px"></i>
+          <h3>Content Writing</h3>
+          <p>SEO-friendly articles, product descriptions, and social content tailored to your brand voice.</p>
+          <p class="note-meta">Clear, conversion-focused copy.</p>
+        </article>
+
+        <article class="card tilt">
+          <i class="fa-solid fa-chalkboard" style="font-size:28px"></i>
+          <h3>Teaching</h3>
+          <p>Short practical workshops &amp; one-on-one mentoring for founders and teams.</p>
+          <p class="note-meta">Hands-on, project-based learning.</p>
+        </article>
+
+        <article class="card tilt">
+          <i class="fa-solid fa-wand-magic-sparkles" style="font-size:28px"></i>
+          <h3>Design + AI Workflow</h3>
+          <p>Use AI tools to accelerate design while keeping human polish.</p>
+          <p class="note-meta">Faster iterations, lower cost.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Notes Section -->
+   <section id="notes" style="margin-top:28px; padding:24px; background: #f0f6ff; border-radius:20px;">
+  <h2 style="text-align:center; margin-bottom:32px;">Notes & Learning Resources 📚</h2>
+  <div class="notes-wrap" style="display:flex;gap:24px;flex-wrap:wrap;">
+
+    <!-- Main Notes Section -->
+    <div style="flex:2; min-width:280px; background:#fff; padding:20px; border-radius:20px; box-shadow:0 6px 20px rgba(0,0,0,0.05);">
+      <div class="note-filter" style="margin-bottom:16px;">
+        <strong>Filter by category</strong>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <button onclick="filterNotes('all')" class="chip">All</button>
+          <button onclick="filterNotes('web')" class="chip">Web Design</button>
+          <button onclick="filterNotes('infra')" class="chip">InfraDecoded</button>
+          <button onclick="filterNotes('content')" class="chip">Content</button>
+          <button onclick="filterNotes('social')" class="chip">Social</button>
+          <button onclick="filterNotes('teaching')" class="chip">Teaching</button>
+        </div>
+      </div>
+
+      <div class="note-list" id="notesList">
+        <!-- Notes cards populated here -->
+      </div>
+    </div>
+
+    <!-- Sidebar / Meta Info -->
+   <aside class="note-meta contact-card" style="flex:1; min-width:220px; background:#fff; padding:20px; border-radius:20px; box-shadow:0 6px 20px rgba(0,0,0,0.05); position:relative;">
+  <div style="position:absolute; top:-15px; right:-15px; background:#007bff; color:#fff; padding:6px 12px; border-radius:12px; font-size:1.5em; font-weight:bold; transform: rotate(-10deg);">
+    Hot Picks 🔥
+  </div>
+  <h2><b>InfraDecoded</b></h2>
+  <p class="muted" style="font-size: 1rem;">Your digital swiss army knife 🛠️. IT admin notes, server setup guides, network tips, scripts — everything a tech ninja needs!</p>
+  <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+    <a href="#" class="cta static-btn" data-static="true" style="flex:1; text-align:center;">Check Samples</a>
+    <a href="#" class="cta static-btn" data-static="true" style="flex:1; text-align:center; background:#ffb400;">Popular Reads</a>
+  </div>
+  <div style="margin-top:12px; font-size:1.3em; color:#555;">💡 Tip: Click a note’s download icon inline for instant access!</div>
+
+  <!-- Announcement Card -->
+  <div class="announcement-card" style="margin-top:24px; padding:16px; border-radius:16px; background: linear-gradient(135deg, #007bff, #00d4ff); color:#fff; position:relative; overflow:hidden; animation: floatAnnouncement 3s ease-in-out infinite alternate;">
+    <div style="font-weight:bold; font-size:1.4em; margin-bottom:6px; letter-spacing:0.5px;">🚀 Coming Soon!</div>
+    <div style="font-size:1.1em;">AI Notes & Learning Resources — get ready for next-level guides, tutorials, and tools to boost your skills! Stay tuned for exclusive early access.</div>
+    <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">
+      <a href="#" class="cta static-btn" data-static="true" style="flex:1; text-align:center; background:#ffe600; color:#000;">Early Access</a>
+      <a href="#" class="cta static-btn" data-static="true" style="flex:1; text-align:center; background:#ff6b6b;">Sneak Peek</a>
+    </div>
+  </div>
+</aside>
+
+  </div>
+</section>
+    <!-- About / Contact / Join -->
+   <section id="about" style="margin-top:24px; display:flex; gap:40px; flex-wrap:wrap;">
+  <!-- About content -->
+  <div style="flex:1; min-width:280px;">
+    <h2>About Attach to Tech</h2>
+    <p class="muted" style="line-height:1.7; font-size:1em;">
+      Attach to Tech is your scrappy startup buddy in the digital jungle 🌿. We build practical products, craft smart designs, and train curious minds to actually use them — all without burning a hole in your pocket. 
+      <br><br>
+      Whether you’re a small business, a creator, or someone who just wants to make the internet cooler, we’ve got your back. 
+      <br><br>
+      From AI-accelerated workflows and hands-on workshops to affordable monthly plans and templates you can actually use today, we keep things practical, fun, and zero-boring. Think of us as your friendly digital sherpas guiding you through tech, memes included. ✨💼📚🛠️
+    </p>
+  </div>
+
+  <!-- Contact beside About -->
+  <div style="flex:1; min-width:280px;">
+    <section id="contact">
+      <div class="contact-card">
+        <h3>Contact</h3>
+        <p class="muted">Fill this quick form and we’ll reply within 48 hours. We don’t bite — promise! 😎</p>
+        <form id="contactForm" style="margin-top:12px">
+          <input name="name" placeholder="Your name" style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #eef6ff" />
+          <input name="email" placeholder="Email" style="width:100%;padding:10px;margin-bottom:8px;border-radius:8px;border:1px solid #eef6ff" />
+          <textarea name="message" placeholder="How can we help?" style="width:100%;padding:10px;border-radius:8px;border:1px solid #eef6ff;min-height:100px"></textarea>
+          <button type="submit" class="cta" style="width:100%;margin-top:8px">Send message</button>
+        </form>
+      </div>
+    </section>
+  </div>
+</section>
+
+
+     <section id="join" style="margin:40px 0">
+  <h2>Join the Adventure 🌟</h2>
+  <p class="muted" style="margin-bottom:24px;">
+    Not your typical “join us” page — we love curious minds, bold ideas, and people who actually read this far. 😎
+  </p>
+
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <!-- Card 1: Collaborators -->
+    <div style="flex:1;min-width:280px;position:relative" class="card tilt witty-card">
+      <div class="badge">🎨 Creatives Wanted</div>
+      <h3>Collaborate With Us</h3>
+      <p class="muted" style="font-size: 0.9rem;">Got skills in photography, design, or meme-making? Let’s make the internet a cooler place — together!</p>
+      <button class="cta" style="margin-top:12px" onclick="alert('High five! We’ll ping you soon. Mail us on : attachtotech@gmail.com' )">Let’s Collab!</button>
+    </div>
+
+    <!-- Card 2: Freelancers / Hiring -->
+    <div style="flex:1;min-width:280px;position:relative" class="card tilt witty-card">
+      <div class="badge">💼 Freelance Friendly</div>
+      <h3>Hire Our Wizards</h3>
+      <p class="muted" style="font-size: 0.9rem;">From building websites to growing social accounts — we craft solutions that make you look like a genius (you don’t have to do anything 😉).</p>
+      <button class="cta" style="margin-top:12px" onclick="alert('Awesome! For our plans & pick your magic. Mail us on : attachtotech@gmail.com')">See Plans</button>
+    </div>
+
+    <!-- Card 3: Learners / Interns -->
+    <div style="flex:1;min-width:280px;position:relative" class="card tilt witty-card">
+      <div class="badge">📚 Lifelong Learners</div>
+      <h3>Join Our Playground</h3>
+      <p class="muted" style="font-size: 0.9rem;">Want to learn IT, social media, or design? Think of us as Hogwarts, but for digital skills. No owls required.</p>
+      <button class="cta" style="margin-top:12px" onclick="alert('Welcome to the squad!🪄 Mail us on : attachtotech@gmail.com')">Start Learning</button>
+    </div>
+  </div>
+</section>
+  </div>
+</section>
+
+
+  <footer class="container" style="background:#f8faff;padding:30px 20px;border-top:1px solid #e0e6f0;margin-top:40px;">
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;max-width:1200px;margin:auto;">
+    
+    <!-- Company Info -->
+    <div style="flex:1;min-width:220px;">
+      <strong style="font-size:1.2em;color:#007bff;">Attach To Tech</strong>
+      <div class="muted" style="margin-top:4px;color:#555;font-size:0.95em;">Tech that sticks with you</div>
+      <div style="margin-top:8px;font-size:0.95em;color:#333;">
+        📧 <a href="mailto:attach2tech@gmail.com" style="color:#007bff;text-decoration:none;">attachtotech@gmail.com</a>
+      </div>
+    </div>
+    
+   
+    
+    <!-- Social Links -->
+    <div style="flex:1;min-width:180px;">
+      <strong style="font-size:1em;color:#007bff;">Connect with us</strong> 
+      <div style="margin-top:8px;display:flex;gap:10px;font-size:1.2em;">
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="https://www.instagram.com/attachtotech?utm_source=ig_web_button_share_sheet&igsh=MXNiMjE0NHB0b2g0dA==" target="_blank" style="color:#007bff;"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.linkedin.com/company/attachtotech/" target="_blank" style="color:#007bff;"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/" target="_blank" style="color:#007bff;"><i class="fab fa-github"></i></a>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Bottom copyright -->
+  <div style="text-align:center;margin-top:20px;font-size:0.9em;color:#555;">
+    © <span id="year"></span> Attach To Tech — Built with ❤️ in India
+  </div>
+</footer>
+  </main>
+
+
+
+
+
+  <script>
+    // Simple JS for interactions and demo content
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile toggle
+    const mobileBtn = document.getElementById('mobileBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileBtn && mobileBtn.addEventListener('click', ()=>{
+      mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+    })
+
+    // Demo notes data
+    const NOTES = [
+      {id:1,cat:'web',title:'HTML & Accessibility Cheatsheet',desc:'Practical HTML layout, semantic tags & accessibility checks',meta:'5 pages • quick reference'},
+      {id:2,cat:'infra',title:'InfraDecoded: Linux server setup',desc:'Step-by-step server hardening & deployment',meta:'12 pages • checklist'},
+      {id:3,cat:'content',title:'Content Calendar Template',desc:'Monthly calendar with prompts and captions',meta:'1 file • CSV'},
+      {id:4,cat:'social',title:'Reels Script Formula',desc:'Hook-Story-CTA script template for 60s reels',meta:'1 page'},
+      {id:5,cat:'teaching',title:'Workshop: Intro to Git',desc:'Hands-on exercises and sample tasks',meta:'8 pages'}
+    ];
+
+   const notesList = document.getElementById('notesList');
+
+function loadNotes(category="all") {
+  fetch(`/notes?category=${category}`)
+    .then(res => res.json())
+    .then(notes => {
+      notesList.innerHTML = '';
+      if(notes.length === 0){
+        notesList.innerHTML = '<p>No notes found. Try another category!</p>';
+        return;
+      }
+      notes.forEach(note => {
+        const div = document.createElement('div');
+        div.className = 'note-card service-card';
+        div.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+            <div>
+              <h3 style="margin:0">${note.title}</h3>
+              <p style="margin:4px 0; font-size:0.9em; color:#555;">${note.description}</p>
+            </div>
+            <a href="/notes/download/${note.filename}" title="Download ${note.title}" style="font-size:1.2em; text-decoration:none; color:#007bff;">
+              <i class="fas fa-download"></i>
+            </a>
+          </div>
+        `;
+        notesList.appendChild(div);
+      });
+    });
+}
+
+function filterNotes(category) {
+  loadNotes(category);
+}
+
+// Initial load
+loadNotes();
+
+    function filterNotes(cat){
+      if(cat==='all') return renderNotes(NOTES);
+      renderNotes(NOTES.filter(n=>n.cat===cat));
+    }
+
+    function downloadNote(id){
+      alert('This demo downloads a placeholder. When integrated with backend, this will fetch the real file. (id='+id+')');
+    }
+    function previewNote(id){
+      const note = NOTES.find(n=>n.id===id);
+      alert('Preview: '+note.title+'\n\n'+note.desc+'\n\n(Open detailed view in real app)');
+    }
+
+    // Quick plan generator (demo AI-like prompt)
+    // function generatePlan(){
+    //   const idea = document.getElementById('quickIdea').value.trim();
+    //   if(!idea) return alert('Type a one-line idea first — eg: "small cafe website + 10 reels monthly"');
+    //   const plan = `Starter plan for: ${idea}\n1) Landing page + contact (3 days)\n2) 6 social posts + 2 reels per month\n3) Hosting setup + basic analytics\nPrice estimate: ₹6,000 - ₹12,000 (example)`;
+    //   alert(plan);
+    // }
+
+    // Forms: demo submit handlers
+    document.getElementById('quoteForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Quote request submitted — demo only. In backend step we will send/store this.');
+      e.target.reset();
+    })
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      alert('Message sent — demo only. Backend will store & email.');
+      e.target.reset();
+    })
+
+    // Small intersection observer for reveal animations
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if(ent.isIntersecting) ent.target.classList.add('float-up');
+      })
+    },{threshold:0.12});
+    document.querySelectorAll('.card, .feature, .note-item, .hero-card').forEach(el=>io.observe(el));
+
+
+
+function loadNotes(category="all") {
+  fetch(`/notes?category=${category}`)
+    .then(res => res.json())
+    .then(notes => {
+      const notesList = document.getElementById('notesList');
+      notesList.innerHTML = '';
+      if(notes.length === 0){
+        notesList.innerHTML = '<p>No notes found.</p>';
+        return;
+      }
+      notes.forEach(note => {
+        const div = document.createElement('div');
+        div.className = 'note-card service-card';
+        div.innerHTML = `
+          <h3>${note.title}</h3>
+          <p>${note.description} 
+            <a href="/notes/download/${note.filename}" class="download-link" title="Download this note">
+              📥 Download
+            </a>
+          </p>
+        `;
+        notesList.appendChild(div);
+      });
+    });
+}
+
+function filterNotes(category) {
+  loadNotes(category);
+}
+
+// Initial load
+loadNotes();
+
+
+  </script>
+</body>
+</html>
