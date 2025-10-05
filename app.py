@@ -37,16 +37,7 @@ class PartnerApplication(db.Model):
     details = db.Column(db.Text)
     date_submitted = db.Column(db.DateTime, default=datetime.utcnow)
 
-class Note(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(200), nullable=False)
-    category = db.Column(db.String(50), nullable=False)
-    filename = db.Column(db.String(200), nullable=False)
-    description = db.Column(db.Text)
 
-# ------------------ NOTES FOLDER ------------------
-NOTE_FOLDER = os.path.join(app.root_path, 'static', 'notes')
-os.makedirs(NOTE_FOLDER, exist_ok=True)
 
 # ------------------ ROUTES ------------------
 
@@ -98,6 +89,39 @@ def join_us():
     return redirect(url_for("index"))
 
 # ------------------ NOTES API ------------------
+# ----------- API for Notes Download/Preview ------------
+NOTE_FOLDER = os.path.join(os.path.dirname(__file__), 'static', 'notes')
+os.makedirs(NOTE_FOLDER, exist_ok=True)
+
+# ---------------- Database Model ----------------
+class Note(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    category = db.Column(db.String(50), nullable=False)
+    filename = db.Column(db.String(200), nullable=False)
+    description = db.Column(db.Text)
+
+db.create_all()
+
+# ---------------- Sample Data ----------------
+if not Note.query.first():
+    sample_notes = [
+        Note(title="HTML & CSS Basics", category="web", filename="promptengg.pdf", description="Step-by-step guide to modern web design."),
+        Note(title="InfraDecoded Server Setup", category="infra", filename="infra_server.pdf", description="Linux server setup and networking checklist."),
+        Note(title="Content Writing Guide", category="content", filename="content_guide.pdf", description="Tips and tricks to write engaging content."),
+        Note(title="Social Media Tips", category="social", filename="social_tips.pdf", description="Boost your social engagement."),
+        Note(title="Teaching Methodology", category="teaching", filename="teaching_method.pdf", description="Learn how to teach IT & design effectively.")
+    ]
+    db.session.bulk_save_objects(sample_notes)
+    db.session.commit()
+
+    # Create dummy files
+    for note in sample_notes:
+        path = os.path.join(NOTE_FOLDER, note.filename)
+        with open(path, 'w') as f:
+            f.write(f"This is a dummy file for {note.title}")
+
+# ---------------- Routes ----------------
 @app.route("/notes")
 def get_notes():
     category = request.args.get("category", "all")
@@ -105,6 +129,7 @@ def get_notes():
         notes = Note.query.all()
     else:
         notes = Note.query.filter_by(category=category).all()
+
     notes_data = [
         {
             "id": note.id,
@@ -118,19 +143,27 @@ def get_notes():
 
 @app.route('/notes/download/<filename>')
 def download_note(filename):
-    return send_from_directory(NOTE_FOLDER, filename, as_attachment=True)
+    return send_from_directory('notes', filename, as_attachment=True)
 
 @app.route("/note/download/<int:id>")
 def note_download(id):
-    note = Note.query.get_or_404(id)
-    return send_from_directory(NOTE_FOLDER, note.filename, as_attachment=True)
+    # In demo, just return JSON, in real app serve file
+    return jsonify({"status":"ok","message":f"Download placeholder for note id {id}"})
 
 @app.route("/note/preview/<int:id>")
 def note_preview(id):
-    note = Note.query.get(id)
+    # Return demo preview content
+    NOTES = [
+        {1: 'HTML & Accessibility Cheatsheet'},
+        {2: 'InfraDecoded: Linux server setup'},
+        {3: 'Content Calendar Template'},
+        {4: 'Reels Script Formula'},
+        {5: 'Workshop: Intro to Git'}
+    ]
+    note = next((n for n in NOTES if id in n), None)
     if note:
-        return jsonify({"title": note.title, "preview": "Demo preview content for this note."})
-    return jsonify({"error": "Note not found"}), 404
+        return jsonify({"title": note[id], "preview": "Demo preview content for this note."})
+    return jsonify({"error":"Note not found"}), 404
 
 # ------------------ AI Plan Generator ------------------
 @app.route('/generate_plan', methods=['POST'])
