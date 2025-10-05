@@ -4,6 +4,7 @@ from flask import Flask, render_template_string, request, redirect, url_for, fla
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
+from waitress import serve
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey123"
@@ -392,4 +393,8 @@ def projects_page():
 # ----------- RUN APP ------------
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))
+     with app.app_context():
+        db.create_all()
+    
+    # For production, use a WSGI server like gunicorn instead
+     serve(app,host='0.0.0.0', port=3700,threads=2)
