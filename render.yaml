@@ -1,0 +1,14 @@
+# render.yaml for Flask Smart Village Portal
+
+services:
+  - type: web
+    name: attachtotech
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: 1
+    autoDeploy: true
+    branch: main
