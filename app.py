@@ -101,25 +101,29 @@ class Note(db.Model):
     filename = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text)
 
-db.create_all()
 
 # ---------------- Sample Data ----------------
-if not Note.query.first():
-    sample_notes = [
-        Note(title="HTML & CSS Basics", category="web", filename="promptengg.pdf", description="Step-by-step guide to modern web design."),
-        Note(title="InfraDecoded Server Setup", category="infra", filename="infra_server.pdf", description="Linux server setup and networking checklist."),
-        Note(title="Content Writing Guide", category="content", filename="content_guide.pdf", description="Tips and tricks to write engaging content."),
-        Note(title="Social Media Tips", category="social", filename="social_tips.pdf", description="Boost your social engagement."),
-        Note(title="Teaching Methodology", category="teaching", filename="teaching_method.pdf", description="Learn how to teach IT & design effectively.")
-    ]
-    db.session.bulk_save_objects(sample_notes)
-    db.session.commit()
+with app.app_context():
+    db.create_all()
 
-    # Create dummy files
-    for note in sample_notes:
-        path = os.path.join(NOTE_FOLDER, note.filename)
-        with open(path, 'w') as f:
-            f.write(f"This is a dummy file for {note.title}")
+    if not Note.query.first():
+        sample_notes = [
+            Note(title="HTML & CSS Basics", category="web", filename="promptengg.pdf", description="Step-by-step guide to modern web design."),
+            Note(title="InfraDecoded Server Setup", category="infra", filename="infra_server.pdf", description="Linux server setup and networking checklist."),
+            Note(title="Content Writing Guide", category="content", filename="content_guide.pdf", description="Tips and tricks to write engaging content."),
+            Note(title="Social Media Tips", category="social", filename="social_tips.pdf", description="Boost your social engagement."),
+            Note(title="Teaching Methodology", category="teaching", filename="teaching_method.pdf", description="Learn how to teach IT & design effectively.")
+        ]
+        db.session.bulk_save_objects(sample_notes)
+        db.session.commit()
+
+        # Create dummy files
+        for note in sample_notes:
+            path = os.path.join(NOTE_FOLDER, note.filename)
+            with open(path, 'w') as f:
+                f.write(f"This is a dummy file for {note.title}")
+
+
 
 # ---------------- Routes ----------------
 @app.route("/notes")
