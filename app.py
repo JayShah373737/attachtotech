@@ -212,9 +212,9 @@ projects = [
 ]
 
 testimonials = [
-    {"quote": "Attach To Tech transformed our online presence.", "author": "Priya Sharma, Entrepreneur"},
-    {"quote": "Social media engagement increased by 300%.", "author": "Ramesh Patel, Brand Manager"},
-    {"quote": "Teaching sessions are concise and highly practical.", "author": "Neha Desai, Student"}
+    {"quote": "Attach To Tech transformed our online presence.", "author": "Riken Shah, Entrepreneur"},
+    {"quote": "Social media engagement increased by 300%.", "author": "Sambhav Shah, Brand Manager"},
+    {"quote": "Teaching sessions are concise and highly practical.", "author": "Aditya Jadhav, Student"}
 ]
 
 @app.route('/projects')
