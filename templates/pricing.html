@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AttachToTech — Pricing</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0a0f2e, #1e2859, #001b2e);
+      --glass: rgba(255, 255, 255, 0.08);
+      --neon-blue: #ffffff;
+      --neon-pink: #13236e;
+      --text-light: #f2f5ff;
+      --card-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-light);
+      overflow-x: hidden;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px;
+      animation: fadeInDown 1s ease;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: #dbe7ff;
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+
+    section {
+      width: 90%;
+      max-width: 1100px;
+      margin: 60px auto;
+      animation: fadeInUp 1s ease;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .pricing-grid {
+      display: grid;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    .card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, var(--neon-blue), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 0 30px rgba(0, 183, 255, 0.4);
+    }
+
+    .card:hover::before {
+      opacity: 0.15;
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 12px;
+      color: var(--neon-blue);
+    }
+
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 16px;
+      line-height: 1.6;
+    }
+
+    .card ul li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card ul li::before {
+      content: "✓";
+      color: var(--neon-pink);
+    }
+
+    .price {
+      font-size: 1.3rem;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    .category-icon {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      color: var(--neon-blue);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Home button */
+    .home-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink));
+      color: #fff;
+      padding: 14px 22px;
+      border-radius: 40px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 0 25px rgba(0,183,255,0.6);
+      animation: pulse 2s infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .home-btn:hover {
+      transform: scale(1.1);
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {opacity:0; transform: translateY(-30px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    @keyframes fadeInUp {
+      from {opacity:0; transform: translateY(30px);}
+      to {opacity:1; transform: translateY(0);}
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,183,255,0.6); }
+      50% { box-shadow: 0 0 35px rgba(255,0,255,0.8); }
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 20px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: #cddaff;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>AttachToTech — Affordable Plans for Small Founders</h1>
+    <p>Empowering small founders & local businesses with next-gen digital solutions 🚀</p>
+  </header>
+
+  <section>
+    <h2>🌐 Website Plans</h2>
+    <div class="pricing-grid">
+      <div class="card">
+        <i class="fa-solid fa-rocket category-icon"></i>
+        <h3>Starter Launch — ₹499</h3>
+        <ul>
+          <li>1–3 pages (Home, About, Contact)</li>
+          <li>Mobile-friendly</li>
+          <li>WhatsApp & social links</li>
+          <li>Basic SEO</li>
+          <li>Free hosting & deployment</li>
+        </ul>
+        <p class="price">🕒 Delivery: 2–3 days</p>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-layer-group category-icon"></i>
+        <h3>Growth Website — ₹1,999</h3>
+        <ul>
+          <li>Up to 5 pages</li>
+          <li>Custom layout & animations</li>
+          <li>Inquiry form + Google Map</li>
+          <li>Hosting setup & deployment</li>
+        </ul>
+        <p class="price">🕒 Delivery: 5–6 days</p>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-globe category-icon"></i>
+        <h3>Business Website — ₹2,999</h3>
+        <ul>
+          <li>6–8 pages + Admin Panel</li>
+          <li>Product listing system</li>
+          <li>Domain + hosting setup</li>
+          <li>1-month free support</li>
+        </ul>
+        <p class="price">🕒 Delivery: 7–10 days</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>📱 Social Media & Content Plans</h2>
+    <div class="pricing-grid">
+      <div class="card">
+        <i class="fa-solid fa-bullhorn category-icon"></i>
+        <h3>Basic Boost — ₹299/month</h3>
+        <ul>
+          <li>6 posts or 2 reels</li>
+          <li>Captions + hashtags</li>
+          <li>Scheduling help</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-chart-line category-icon"></i>
+        <h3>Consistent Growth — ₹399/month</h3>
+        <ul>
+          <li>10–12 posts + 3 reels</li>
+          <li>Story templates + hashtags</li>
+          <li>Brand consistency</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-fire category-icon"></i>
+        <h3>Brand Presence — ₹499/month</h3>
+        <ul>
+          <li>15+ posts + 5 reels</li>
+          <li>Custom templates</li>
+          <li>Monthly analytics report</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🎯 Combo Packages</h2>
+    <div class="pricing-grid">
+      <div class="card">
+        <i class="fa-solid fa-link category-icon"></i>
+        <h3>Website + Social Starter — ₹1,999</h3>
+        <ul>
+          <li>Simple website + 6 social posts</li>
+          <li>Free deployment & optimization</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-star category-icon"></i>
+        <h3>Website + Social Growth — ₹2,999</h3>
+        <ul>
+          <li>Modern website + consistent social growth</li>
+          <li>Custom animations + analytics setup</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>⚡ Add-ons</h2>
+    <div class="pricing-grid">
+      <div class="card">
+        <i class="fa-solid fa-pen-nib category-icon"></i>
+        <h3>Logo Design — ₹499</h3>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-server category-icon"></i>
+        <h3>Domain + Hosting Setup — ₹999/year</h3>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-bolt category-icon"></i>
+        <h3>SEO Boost — ₹799</h3>
+      </div>
+
+      <div class="card">
+        <i class="fa-solid fa-map-location-dot category-icon"></i>
+        <h3>Google My Business Setup — ₹499</h3>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>💬 Deployment & Payment Info</h2>
+    <div class="card" style="max-width:700px;margin:0 auto;">
+      <ul>
+        <li>All websites include full deployment assistance.</li>
+        <li>Starter & Growth plans use free hosting (Netlify, GitHub Pages, etc.).</li>
+        <li>Business plan includes domain + hosting + setup.</li>
+        <li>50% advance, 50% after preview.</li>
+        <li>Payments via UPI / Bank transfer.</li>
+        <li>Delivery within 2–10 days depending on plan.</li>
+      </ul>
+      <p style="margin-top:15px;">Let’s build your online presence together 🚀</p>
+      <p>Email: <b>attachtotech@gmail.com</b> | Instagram: <b>@AttachToTech</b></p>
+    </div>
+  </section>
+
+  <a href="/" class="home-btn"><i class="fa-solid fa-house"></i> Home</a>
+
+  <footer>
+    © 2025 AttachToTech. Crafted with 💙 for growing creators.
+  </footer>
+
+</body>
+</html>

@@ -225,6 +225,10 @@ testimonials = [
 def projects_page():
     return render_template('projects.html', projects=projects, testimonials=testimonials)
 
+@app.route('/pricing')
+def pricing():
+    return render_template('pricing.html')
+
 # ------------------ RUN APP ------------------
 if __name__ == "__main__":
     with app.app_context():
